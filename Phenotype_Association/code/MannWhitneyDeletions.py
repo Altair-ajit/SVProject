@@ -7,7 +7,7 @@ import bmiList
 from statsmodels.stats.multitest import multipletests as mpt
 
 #initiating the file to be read
-deletions = "dsgv.df"
+deletions = "../data/dsgv.df"
 dfile = pd.read_pickle(deletions)
 
 #mann whitney for the columns

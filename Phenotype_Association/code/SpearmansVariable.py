@@ -7,10 +7,8 @@ import bmiList
 from statsmodels.stats.multitest import multipletests as mpt
 
 #initiating the file to be read
-variables = "vsgv.df"
+variables = "../data/vsgv.df"
 vfile = pd.read_pickle(variables)
-vfile.to_csv('check.csv')
-
 
 ageppl = bmiList.getAgeppl()
 bmippl = bmiList.getBMIppl()
@@ -60,7 +58,8 @@ for column in range(vfile.shape[1]):
     ageRHO.append(rho)
     agePvals.append(pval)
 
-
+print(bmiPvals)
+print(agePvals)
 
 bmiReject, bmiQvals, e, a = mpt(bmiPvals, 0.05, 'fdr_bh', False, False)
 

@@ -4,7 +4,7 @@ from scipy import stats
 import numpy as npp
 
 def getBMIppl():
-    files = "subset_ena2fd.csv"
+    files = "../data/subset_ena2fd.csv"
     pplFile = pd.read_csv(files)
     runNumbers = []
     for row in range(pplFile.shape[0]):
@@ -13,7 +13,7 @@ def getBMIppl():
     return runNumbers
 
 def getAgeppl():
-    files = "subset_ena2fd.csv"
+    files = "../data/subset_ena2fd.csv"
     pplFile = pd.read_csv(files)
     runNumbers = []
     for row in range(pplFile.shape[0]):
@@ -22,7 +22,7 @@ def getAgeppl():
     return runNumbers
 
 def getBMI(x):
-    files = "subset_ena2fd.csv"
+    files = "../data/subset_ena2fd.csv"
     pplFile = pd.read_csv(files)
     for row in range(pplFile.shape[0]):
         if pplFile.iloc[row][2] == x:
@@ -30,7 +30,7 @@ def getBMI(x):
     return null
 
 def getAge(x):
-    files = "subset_ena2fd.csv"
+    files = "../data/subset_ena2fd.csv"
     pplFile = pd.read_csv(files)
     for row in range(pplFile.shape[0]):
         if pplFile.iloc[row][2] == x:
