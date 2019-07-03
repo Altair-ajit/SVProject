@@ -1,10 +1,9 @@
 import pandas as pd
 from pandas import DataFrame as df
 from scipy import stats
-import numpy as np
-import statsmodels
 import bmiList
-from statsmodels.stats.multitest import multipletests as mpt
+import numpy as np
+from mne.stats import fdr_correction as fdr
 
 #initiating the file to be read
 variables = "../data/vsgv.df"
@@ -47,7 +46,6 @@ for column in range(vfile.shape[1]):
                 ageVarArray.append(0)
             else:
                 ageVarArray.append(adding)
-    
     bmiSpear = np.stack((bmiOrder, bmiVarArray))
     rho, pval = stats.spearmanr(bmiSpear)
     bmiRHO.append(rho)
@@ -58,11 +56,9 @@ for column in range(vfile.shape[1]):
     ageRHO.append(rho)
     agePvals.append(pval)
 
-print(bmiPvals)
-print(agePvals)
 
-bmiReject, bmiQvals, e, a = mpt(bmiPvals, 0.05, 'fdr_bh', False, False)
+bmiReject, bmiQvals = fdr(bmiPvals, 0.05, 'indep')
 
-ageReject, ageQvals, e, a = mpt(agePvals, 0.05, 'fdr_bh', False, False)
+ageReject, ageQvals = fdr(agePvals, 0.05, 'indep')
 
 #heatmap condtitions

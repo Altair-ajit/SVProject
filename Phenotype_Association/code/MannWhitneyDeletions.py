@@ -56,4 +56,4 @@ for column in range(dfile.shape[1]):
 
 bmiReject, bmiQvals, e, a = mpt(bmiPvals, 0.05, 'fdr_bh', False, False)
 
-bmiReject, bmiQvals, e, a = mpt(bmiPvals, 0.05, 'fdr_bh', False, False)
+ageReject, ageQvals, e, a = mpt(agePvals, 0.05, 'fdr_bh', False, False)
