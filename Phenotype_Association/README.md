@@ -1,1 +1,3 @@
-#SV Project
+#SV Projec
+
+Must use MNE environment
