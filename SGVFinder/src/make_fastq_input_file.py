@@ -4,7 +4,7 @@
 # samples from any WGS study.
 import os
 
-experiments = os.listdir('../data/PRJEB11532/')
+experiments = os.listdir('../data/PRJEB11532_subset/')
 
 out = [i[0:10] for i in experiments]
 out_sorted = sorted(set(out))

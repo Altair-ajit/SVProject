@@ -1,0 +1,34 @@
+/fs/cbcb-scratch/dbraccia/bin/miniconda3/envs/SGVFinder/lib/python2.7/site-packages/scipy/stats/_continuous_distns.py:589: RuntimeWarning: divide by zero encountered in true_divide
+  a/(b-1.0),
+/fs/cbcb-scratch/dbraccia/bin/miniconda3/envs/SGVFinder/lib/python2.7/site-packages/scipy/stats/_continuous_distns.py:593: RuntimeWarning: divide by zero encountered in true_divide
+  a*(a+1.0)/((b-2.0)*(b-1.0)),
+/fs/cbcb-scratch/dbraccia/bin/miniconda3/envs/SGVFinder/lib/python2.7/site-packages/scipy/stats/_distn_infrastructure.py:1037: RuntimeWarning: invalid value encountered in subtract
+  mu2 = mu2p - mu * mu
+/fs/cbcb-scratch/dbraccia/bin/miniconda3/envs/SGVFinder/lib/python2.7/site-packages/scipy/stats/_distn_infrastructure.py:2305: RuntimeWarning: invalid value encountered in double_scalars
+  Lhat = muhat - Shat*mu
+/fs/cbcb-scratch/dbraccia/bin/miniconda3/envs/SGVFinder/lib/python2.7/site-packages/numpy/lib/function_base.py:1128: RuntimeWarning: Mean of empty slice.
+  avg = a.mean(axis)
+/fs/cbcb-scratch/dbraccia/bin/miniconda3/envs/SGVFinder/lib/python2.7/site-packages/numpy/core/_methods.py:80: RuntimeWarning: invalid value encountered in double_scalars
+  ret = ret.dtype.type(ret / rcount)
+/fs/cbcb-scratch/dbraccia/bin/miniconda3/envs/SGVFinder/lib/python2.7/site-packages/numpy/lib/function_base.py:4033: RuntimeWarning: All-NaN slice encountered
+  r = func(a, **kwargs)
+/fs/cbcb-scratch/dbraccia/SGVFinder/src/SGVFinder.py:173: FutureWarning: Sorting because non-concatenation axis is not aligned. A future version
+of pandas will change to not sort by default.
+
+To accept the future behavior, pass 'sort=False'.
+
+To retain the current behavior and silence the warning, pass 'sort=True'.
+
+  return concat(sgvregions_all, axis = 1) if len(sgvregions_all) > 0 else DataFrame(), \
+/fs/cbcb-scratch/dbraccia/SGVFinder/src/SGVFinder.py:174: FutureWarning: Sorting because non-concatenation axis is not aligned. A future version
+of pandas will change to not sort by default.
+
+To accept the future behavior, pass 'sort=False'.
+
+To retain the current behavior and silence the warning, pass 'sort=True'.
+
+  concat(delsregions_all, axis = 1) if len(delsregions_all) > 0 else DataFrame()
+starting work_on_collection script
+getting sample map dictionary from standard input
+subset_dict.npy
+running work_on_collection

@@ -1,0 +1,13 @@
+ERR1110308
+initialization done ... running single_file()
+../data/PRJEB11532_subset/ERR1110308_1.fastq
+../data/PRJEB11532_subset/ERR1110308_2.fastq
+
+All time stamps below are in minutes
+
+time taken to index reads 0.0
+time taken to run GEM Mapper 107.0
+time taken to initialize read parameters 6.0
+time taken to run iterative read assignment 21.0
+
+time taken to run whole sample 135.0

@@ -1,0 +1,12 @@
+ERR1110294
+initialization done ... running single_file()
+../data/PRJEB11532_subset/ERR1110294.fastq
+
+All time stamps below are in minutes
+
+time taken to index reads 0.0
+time taken to run GEM Mapper 24.0
+time taken to initialize read parameters 4.0
+time taken to run iterative read assignment 24.0
+
+time taken to run whole sample 53.0

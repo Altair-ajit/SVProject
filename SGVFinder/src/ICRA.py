@@ -11,6 +11,7 @@ from GEMMapping import gemmap_single_file, _load_from_file
 from cy_ext import CSeqDict
 import ujson
 from ReadContainer import ReadContainer
+import time # dbraccia's edit
 log_ = logging.getLogger('ICRA')
 
 GENOMES = 'genomes'
@@ -20,27 +21,52 @@ def single_file(fq1, fq2, outfol, max_mismatch, consider_lengths, epsilon, \
                 max_iterations, min_bins = 4, max_bins = 100, \
                 min_reads = 5, dense_region_coverage = 60, length_minimum = 300, \
                 length_maximum = 1e6, usage = 'cami', use_theta = False):
+
+    ### dbraccia's edit: seeing how long making index takes ###
+    t = time.time()
     assert usage in {CAMI, GENOMES}
     seqdict = C_CamidDBDict() if usage == CAMI else C_EmblDB() 
     indexl = cami_index if usage == CAMI else genomes_index 
     dest_dictf =  cami_destdictf if usage == CAMI else genomes_destdictf
     pmpf = join(outfol, basename(fq1).replace('_1.fastq', '.pmp').replace('.fastq', '.pmp'))
+    t_index = time.time() - t
+    ####################### 2019-07-03 ########################
+
+    ### dbraccia's edit: added the `time.time() lines to test how long GEM Mapper takes` ###
+    t = time.time()
     gemmap_single_file(fq1, fq2, pmpf, indexl, seqdict, 0.05, 0.05, 2) 
+    t_GEM = time.time() - t
+    #print 'running gemmap_single_file took', t_GEM
+    ################################## 2019-07-03 ##########################################
+
+    ### dbraccia's edit: timing how long initialization takes ###
+    t = time.time()
     read_container, pi, theta1, average_read_length, lengthdb = \
         _initialize(fq1, fq2, pmpf, seqdict, max_mismatch, consider_lengths, \
                     length_minimum, length_maximum, min_reads, min_bins, max_bins, \
                     dense_region_coverage, dest_dictf, use_theta)
+    t_init = time.time() - t
+    #print 'initialization took', t_init
+    ####################### 2019-07-03 ##########################
+
     del seqdict
     if len(pi) == 0:
         delta = {}
     else:
+
+        ################################ dbraccia's edit ########################################
+        t = time.time()
         delta, pi = _runIterative(pi, theta1, read_container, min_bins, max_bins, \
                               min_reads, average_read_length, max_mismatch, \
                               lengthdb, dense_region_coverage, consider_lengths, \
                               length_minimum, length_maximum, epsilon, max_iterations, use_theta)
+        t_iter = time.time() - t
+        #print 'running iterative read assignment portion took', t_iter
+        ################################## 2019-07-03 ###########################################
+
     with open(join(outfol, basename(pmpf).replace('.pmp', '.jsdel')), 'wb') as of:
         ujson.dump(delta, of, double_precision=100)
-    return pmpf.replace('.pmp', '.jsdel')
+    return t_index, t_GEM, t_init, t_iter, pmpf.replace('.pmp', '.jsdel')
 
 @timeit(log_, "%s: Parameter init complete. Time: %s", logging.INFO)    
 def _initialize(fq1, fq2, pmpf, seqdict, max_mismatch, consider_lengths, \
