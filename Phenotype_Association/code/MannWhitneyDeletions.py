@@ -1,10 +1,10 @@
 import pandas as pd
 from pandas import DataFrame as df
 from scipy import stats
-import numpy as np
-import statsmodels
 import bmiList
-from statsmodels.stats.multitest import multipletests as mpt
+import numpy as np
+from mne.stats import fdr_correction as fdr
+import seaborn as sns
 
 #initiating the file to be read
 deletions = "../data/dsgv.df"
@@ -46,14 +46,86 @@ for column in range(dfile.shape[1]):
                 ageDelArray.append(0)
             else:
                 ageDelArray.append(adding)
-    u, pVal = stats.mannwhitneyu(bmiOrder, bmiDelArray)
+
+        #re-arrange data into 2 columns to compare deletion and no-deletion
+        bmi0 = []
+        bmi1 = []
+        for dels in range(len(bmiDelArray)):
+            if bmiDelArray[dels] == 0:
+                bmi0.append(bmiOrder[dels])
+            else:
+                bmi1.append(bmiOrder[dels])
+
+        age0 = []
+        age1 = []
+        for dels in range(len(ageDelArray)):
+            if ageDelArray[dels] == 0:
+                age0.append(ageOrder[dels])
+            else:
+                age1.append(ageOrder[dels])
+                
+    u, pVal = stats.mannwhitneyu(bmi0, bmi1)
     bmiPvals.append(pVal)
     bmiUs.append(u) 
 
-    u, pVal = stats.mannwhitneyu(ageOrder, ageDelArray)
+    u, pVal = stats.mannwhitneyu(age0, age1)
     agePvals.append(pVal)
     ageUs.append(u) 
 
-bmiReject, bmiQvals, e, a = mpt(bmiPvals, 0.05, 'fdr_bh', False, False)
 
-ageReject, ageQvals, e, a = mpt(agePvals, 0.05, 'fdr_bh', False, False)
+print(ageUs)
+print(bmiUs)
+
+bmiReject, bmiQvals = fdr(bmiPvals, 0.05, 'indep')
+
+ageReject, ageQvals = fdr(agePvals, 0.05, 'indep')
+
+
+#heatmap condtitions
+passAge = []
+passBMI = []
+for count in range(len(agePvals)):
+    if agePvals[count] < .1 or bmiPvals[count] < .1:
+        if ageUs[count] < 0:
+            passAge.append((agePvals[count] * -1))    
+        else:
+            passAge.append(agePvals[count])
+        if bmiUs[count] < 0:
+            passBMI.append((bmiPvals[count] * -1))    
+        else:
+            passBMI.append(bmiPvals[count])
+
+
+heatset = np.column_stack((passBMI, passAge))
+colors = ["#c7dcff","#99bfff", "#6ba1ff","#0f69fa" ,"#fa2f0f" ,"#ff4f30", "#ff7057", "#fcb3a7"]
+fig = sns.heatmap(heatset, vmax = .12, vmin = -0.12, cmap = colors, center = 0, xticklabels = ["BMI", "Age"], yticklabels = False)
+fig.set(ylabel = "Deletion SVs")
+colorbar = fig.collections[0].colorbar
+colorbar.set_ticks([-0.105, -0.075, -.045,-.015, 0,.015, .045, .075, 0.105])
+colorbar.set_ticklabels(["n.s","p<0.1", "p<0.05", "p<0.01", " ", "p<0.01", "p<0.05", "p<0.1","n.s"])
+e = fig.get_figure() 
+e.savefig("../results/Deletion_SV/MannUWhitneyPvalsHeatmap.png")
+
+
+passAge = []
+passBMI = []
+for count in range(len(ageQvals)):
+    if ageQvals[count] < .1 or bmiQvals[count] < .1:
+        if ageUs[count] < 0:
+            passAge.append((ageQvals[count] * -1))    
+        else:
+            passAge.append(ageQvals[count])
+        if bmiUs[count] < 0:
+            passBMI.append((bmiQvals[count] * -1))    
+        else:
+            passBMI.append(bmiQvals[count])
+
+
+heatset = np.column_stack((passBMI, passAge))
+fig = sns.heatmap(heatset, vmax = .12, vmin = -0.12, cmap = colors, center = 0, xticklabels = ["BMI", "Age"], yticklabels = False)
+fig.set(ylabel = "Deletion SVs")
+colorbar = fig.collections[0].colorbar
+colorbar.set_ticks([-0.105, -0.075, -.045,-.015, 0,.015, .045, .075, 0.105])
+colorbar.set_ticklabels(["n.s","q<0.1", "q<0.05", "q<0.01", " ", "q<0.01", "q<0.05", "q<0.1","n.s"])
+e = fig.get_figure() 
+e.savefig("../results/Deletion_SV/MannUWhitneyQvalsHeatmap.png")
