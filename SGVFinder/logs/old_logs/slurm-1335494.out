@@ -1,0 +1,16 @@
+hi
+/fs/cbcb-scratch/dbraccia/bin/miniconda3/envs/SGVFinder/lib/python2.7/site-packages/scipy/stats/_continuous_distns.py:589: RuntimeWarning: divide by zero encountered in true_divide
+  a/(b-1.0),
+/fs/cbcb-scratch/dbraccia/bin/miniconda3/envs/SGVFinder/lib/python2.7/site-packages/scipy/stats/_continuous_distns.py:593: RuntimeWarning: divide by zero encountered in true_divide
+  a*(a+1.0)/((b-2.0)*(b-1.0)),
+/fs/cbcb-scratch/dbraccia/bin/miniconda3/envs/SGVFinder/lib/python2.7/site-packages/scipy/stats/_distn_infrastructure.py:1037: RuntimeWarning: invalid value encountered in subtract
+  mu2 = mu2p - mu * mu
+/fs/cbcb-scratch/dbraccia/bin/miniconda3/envs/SGVFinder/lib/python2.7/site-packages/scipy/stats/_distn_infrastructure.py:2305: RuntimeWarning: invalid value encountered in double_scalars
+  Lhat = muhat - Shat*mu
+/fs/cbcb-scratch/dbraccia/bin/miniconda3/envs/SGVFinder/lib/python2.7/site-packages/numpy/lib/function_base.py:1128: RuntimeWarning: Mean of empty slice.
+  avg = a.mean(axis)
+/fs/cbcb-scratch/dbraccia/bin/miniconda3/envs/SGVFinder/lib/python2.7/site-packages/numpy/core/_methods.py:80: RuntimeWarning: invalid value encountered in double_scalars
+  ret = ret.dtype.type(ret / rcount)
+/fs/cbcb-scratch/dbraccia/bin/miniconda3/envs/SGVFinder/lib/python2.7/site-packages/numpy/lib/function_base.py:4033: RuntimeWarning: All-NaN slice encountered
+  r = func(a, **kwargs)
+slurmstepd: error: *** JOB 1335494 ON tern01 CANCELLED AT 2019-06-18T14:04:38 ***

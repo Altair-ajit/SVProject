@@ -1,0 +1,7 @@
+starting work_on_collection script
+getting sample map dictionary from standard input
+subset_dict.npy
+Traceback (most recent call last):
+  File "run_work_on_collection_par.py", line 13, in <module>
+    samp_to_map = np.load(join(OUTPUT_FOLDER, sample_map_dict)).item()
+NameError: name 'join' is not defined

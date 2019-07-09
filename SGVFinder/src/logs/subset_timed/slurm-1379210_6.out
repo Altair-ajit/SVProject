@@ -1,0 +1,13 @@
+ERR1110298
+initialization done ... running single_file()
+../data/PRJEB11532_subset/ERR1110298_1.fastq
+../data/PRJEB11532_subset/ERR1110298_2.fastq
+
+All time stamps below are in minutes
+
+time taken to index reads 0.0
+time taken to run GEM Mapper 227.0
+time taken to initialize read parameters 15.0
+time taken to run iterative read assignment 45.0
+
+time taken to run whole sample 287.0
