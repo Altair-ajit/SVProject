@@ -5,7 +5,7 @@
 #SBATCH --time=3-00:00:00
 #SBATCH --qos=large
 #SBATCH --mem=128gb
-#SBATCH --array=1-20
+#SBATCH --array=1-1174
 
 # fastq_input.txt was made using make_fastq_input_file.py
 file=`head -n ${SLURM_ARRAY_TASK_ID} fastq_input.txt | tail -n 1`
