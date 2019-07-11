@@ -98,11 +98,11 @@ for count in range(len(agePvals)):
 
 heatset = np.column_stack((passBMI, passAge))
 colors = ["#c7dcff","#99bfff", "#6ba1ff","#0f69fa" ,"#fa2f0f" ,"#ff4f30", "#ff7057", "#fcb3a7"]
-fig = sns.heatmap(heatset, vmax = .12, vmin = -0.12, cmap = colors, center = 0, xticklabels = ["BMI", "Age"], yticklabels = False)
+fig = sns.heatmap(heatset, vmax = .12, vmin = 0, cmap = "Reds", center = 0, xticklabels = ["BMI", "Age"], yticklabels = False)
 fig.set(ylabel = "Deletion SVs")
 colorbar = fig.collections[0].colorbar
-colorbar.set_ticks([-0.105, -0.075, -.045,-.015, 0,.015, .045, .075, 0.105])
-colorbar.set_ticklabels(["n.s","p<0.1", "p<0.05", "p<0.01", " ", "p<0.01", "p<0.05", "p<0.1","n.s"])
+colorbar.set_ticks([0,.015, .045, .075, 0.105])
+colorbar.set_ticklabels( "p<0.01", "p<0.05", "p<0.1","n.s"])
 e = fig.get_figure() 
 e.savefig("../results/Deletion_SV/MannUWhitneyPvalsHeatmap.png")
 
