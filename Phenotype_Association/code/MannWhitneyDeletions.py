@@ -9,6 +9,7 @@ import seaborn as sns
 #initiating the file to be read
 deletions = "../data/dsgv.df"
 dfile = pd.read_pickle(deletions)
+print(dfile.head())
 
 #mann whitney for the columns
 ageppl = bmiList.getAgeppl()
@@ -73,9 +74,6 @@ for column in range(dfile.shape[1]):
     ageUs.append(u) 
 
 
-print(ageUs)
-print(bmiUs)
-
 bmiReject, bmiQvals = fdr(bmiPvals, 0.05, 'indep')
 
 ageReject, ageQvals = fdr(agePvals, 0.05, 'indep')
@@ -98,11 +96,12 @@ for count in range(len(agePvals)):
 
 heatset = np.column_stack((passBMI, passAge))
 colors = ["#c7dcff","#99bfff", "#6ba1ff","#0f69fa" ,"#fa2f0f" ,"#ff4f30", "#ff7057", "#fcb3a7"]
-fig = sns.heatmap(heatset, vmax = .12, vmin = 0, cmap = "Reds", center = 0, xticklabels = ["BMI", "Age"], yticklabels = False)
+reds = ["#fa2f0f" ,"#ff4f30", "#ff7057", "#fcb3a7"]
+fig = sns.heatmap(heatset, vmax = .15, vmin = 0, cmap = reds, center = .075, xticklabels = ["BMI", "Age"], yticklabels = False)
 fig.set(ylabel = "Deletion SVs")
 colorbar = fig.collections[0].colorbar
-colorbar.set_ticks([0,.015, .045, .075, 0.105])
-colorbar.set_ticklabels( "p<0.01", "p<0.05", "p<0.1","n.s"])
+colorbar.set_ticks([.01, .05, .1, 0.15])
+colorbar.set_ticklabels(["p<0.01", "p<0.05", "p<0.1","n.s"])
 e = fig.get_figure() 
 e.savefig("../results/Deletion_SV/MannUWhitneyPvalsHeatmap.png")
 
