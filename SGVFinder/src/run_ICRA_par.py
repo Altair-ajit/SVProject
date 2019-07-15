@@ -13,8 +13,8 @@ import os
 import sys
 import time
 t_start = time.time()
-INPUT_FOLDER = '../data/PRJEB11532_subset/'
-OUTPUT_FOLDER = '../results/subset_example_timed/'
+INPUT_FOLDER = '../data/Israeli_cohort/'
+OUTPUT_FOLDER = '../results/Israeli_cohort/'
 if not os.path.exists(join(OUTPUT_FOLDER, 'browser')):
     os.mkdir(join(OUTPUT_FOLDER, 'browser'))
 
