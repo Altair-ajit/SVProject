@@ -10,7 +10,6 @@ import seaborn as sns
 #initiating the file to be read
 variables = "../data/vsgv.df"
 vfile = pd.read_pickle(variables)
-print(vfile.head())
 ageppl = bmiList.getAgeppl()
 bmippl = bmiList.getBMIppl()
 
