@@ -5,6 +5,7 @@ import bmiList
 import numpy as np
 from mne.stats import fdr_correction as fdr
 import seaborn as sns
+sns.set(font_scale = .375)
 
 #initiating the file to be read
 deletions = "../data/dsgv.df"
@@ -14,6 +15,21 @@ print(dfile.head())
 #mann whitney for the columns
 ageppl = bmiList.getAgeppl()
 bmippl = bmiList.getBMIppl()
+
+taxa = []
+sciname = []
+binslist = []
+for col in dfile.columns:
+    tax, bins = bmiList.parseName(col)
+    taxa.append(tax)
+    binslist.append(bins)
+
+sciname = bmiList.getTax(taxa)
+taxonomy = []
+for count in range(len(sciname)):
+    fullname = sciname[count] + binslist[count]
+    taxonomy.append(fullname)
+
 
 bmiOrder = []
 ageOrder = []
@@ -82,8 +98,10 @@ ageReject, ageQvals = fdr(agePvals, 0.05, 'indep')
 #heatmap condtitions
 passAge = []
 passBMI = []
+passTax = []
 for count in range(len(agePvals)):
     if agePvals[count] < .1 or bmiPvals[count] < .1:
+        passTax.append(taxonomy[count])
         if ageUs[count] < 0:
             passAge.append((agePvals[count] * -1))    
         else:
@@ -97,7 +115,7 @@ for count in range(len(agePvals)):
 heatset = np.column_stack((passBMI, passAge))
 colors = ["#c7dcff","#99bfff", "#6ba1ff","#0f69fa" ,"#fa2f0f" ,"#ff4f30", "#ff7057", "#fcb3a7"]
 reds = ["#fa2f0f" ,"#ff4f30", "#ff7057", "#fcb3a7"]
-fig = sns.heatmap(heatset, vmax = .15, vmin = 0, cmap = reds, center = .075, xticklabels = ["BMI", "Age"], yticklabels = False)
+fig = sns.heatmap(heatset, vmax = .15, vmin = 0, cmap = reds, center = .075, xticklabels = ["BMI", "Age"], yticklabels = passTax)
 fig.set(ylabel = "Deletion SVs")
 colorbar = fig.collections[0].colorbar
 colorbar.set_ticks([.01, .05, .1, 0.15])
@@ -108,8 +126,10 @@ e.savefig("../results/Deletion_SV/MannUWhitneyPvalsHeatmap.png")
 
 passAge = []
 passBMI = []
+passTax = []
 for count in range(len(ageQvals)):
     if ageQvals[count] < .1 or bmiQvals[count] < .1:
+        passTax.append(taxonomy[count])
         if ageUs[count] < 0:
             passAge.append((ageQvals[count] * -1))    
         else:
@@ -121,7 +141,7 @@ for count in range(len(ageQvals)):
 
 
 heatset = np.column_stack((passBMI, passAge))
-fig = sns.heatmap(heatset, vmax = .12, vmin = -0.12, cmap = colors, center = 0, xticklabels = ["BMI", "Age"], yticklabels = False)
+fig = sns.heatmap(heatset, vmax = .12, vmin = -0.12, cmap = colors, center = 0, xticklabels = ["BMI", "Age"], yticklabels = passTax)
 fig.set(ylabel = "Deletion SVs")
 colorbar = fig.collections[0].colorbar
 colorbar.set_ticks([-0.105, -0.075, -.045,-.015, 0,.015, .045, .075, 0.105])
