@@ -1,6 +1,0 @@
-starting work_on_collection script
-getting sample map dictionary from standard input
-Traceback (most recent call last):
-  File "run_work_on_collection_par.py", line 8, in <module>
-    sample_map_dict = sys.argv[1]
-NameError: name 'sys' is not defined
